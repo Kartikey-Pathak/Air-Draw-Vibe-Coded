@@ -36,19 +36,14 @@ export default function Home() {
     };
 
     const init = async () => {
-      // ✅ FIXED SCRIPT LOADING ORDER
       await loadScript("https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/hands.js");
       await loadScript("https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js");
 
       await loadScript("https://cdn.jsdelivr.net/npm/@tensorflow/tfjs");
-
-      // ✅ WAIT until tf is ready
       await waitFor(() => window.tf);
       await window.tf.ready();
 
       await loadScript("https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd");
-
-      // ✅ WAIT until coco-ssd is ready
       await waitFor(() => window.cocoSsd);
 
       setCanvasSize();
@@ -63,7 +58,6 @@ export default function Home() {
       video.srcObject = stream;
       await video.play();
 
-      // ✅ now safe to load model
       model = await window.cocoSsd.load();
 
       hands = new window.Hands({
@@ -272,31 +266,39 @@ export default function Home() {
         </button>
       </div>
 
+      {/* 🎥 VIDEO */}
       <video
         ref={videoRef}
         autoPlay
         playsInline
         muted
         className="absolute w-full h-full object-cover"
-        style={{ transform: "scaleX(-1)" }}
+        style={{
+          transform: facingMode === "user" ? "scaleX(-1)" : "scaleX(1)",
+        }}
       />
 
+      {/* 🎨 DRAW */}
       <canvas
         ref={drawCanvasRef}
         className="absolute w-full h-full"
-        style={{ transform: "scaleX(-1)" }}
+        style={{
+          transform: facingMode === "user" ? "scaleX(-1)" : "scaleX(1)",
+        }}
       />
 
+      {/* 🖐️ OVERLAY */}
       <canvas
         ref={overlayCanvasRef}
         className="absolute w-full h-full"
-        style={{ transform: "scaleX(-1)" }}
+        style={{
+          transform: facingMode === "user" ? "scaleX(-1)" : "scaleX(1)",
+        }}
       />
     </div>
   );
 }
 
-// ✅ loader
 function loadScript(src) {
   return new Promise((resolve) => {
     if (document.querySelector(`script[src="${src}"]`)) return resolve();
@@ -307,7 +309,6 @@ function loadScript(src) {
   });
 }
 
-// ✅ wait helper (CRITICAL FIX)
 function waitFor(conditionFn) {
   return new Promise((resolve) => {
     const check = () => {
