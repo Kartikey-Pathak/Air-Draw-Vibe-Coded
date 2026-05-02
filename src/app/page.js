@@ -10,10 +10,24 @@ export default function Home() {
   const [facingMode, setFacingMode] = useState("user");
   const [loading, setLoading] = useState(true);
 
+  const [showGuide, setShowGuide] = useState(false);
+
   const modeRef = useRef(mode);
   useEffect(() => {
     modeRef.current = mode;
   }, [mode]);
+
+  useEffect(() => {
+    const seen = localStorage.getItem("airdraw-guide");
+    if (!seen) {
+      setShowGuide(true);
+    }
+  }, []);
+
+  const closeGuide = () => {
+    localStorage.setItem("airdraw-guide", "true");
+    setShowGuide(false);
+  };
 
   useEffect(() => {
     let lastX = null;
@@ -257,6 +271,26 @@ export default function Home() {
             </svg>
             <span> <span className=" font-semibold">Warning:</span> High CPU Usage <span className=" font-bold">Mobile May Heat Up...</span></span>
           </div>
+        </div>
+      )}
+      {showGuide && (
+        <div className="absolute inset-0 z-50 bg-black/90 text-white flex flex-col items-center justify-center px-6 text-center">
+
+          <h1 className="text-2xl font-bold mb-6">How to Use</h1>
+
+          <div className="space-y-4 text-lg">
+            <p>👉 Use <b>index finger</b> to draw</p>
+            <p>✋ Open <b>palm</b> to erase</p>
+            <p>🎯 Switch to <b>Object Mode</b> for detection</p>
+            <p>📷 Use <b>Switch Camera</b> if needed</p>
+          </div>
+
+          <button
+            onClick={closeGuide}
+            className=" font-semibold hover:opacity-85 active:opacity-85 mt-8 px-6 py-2 bg-white text-black rounded-lg"
+          >
+            Got it
+          </button>
         </div>
       )}
 
