@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ✍️ Air Draw + Object Detection (AI Web App)
 
-## Getting Started
+An interactive browser-based AI app where you can **draw in air using your finger** and switch to **real-time object detection** — all powered by your webcam.
 
-First, run the development server:
+> ⚡ Built with a “vibe coding” approach — rapid iteration, real-time experimentation, and hands-on debugging to make AI feel intuitive.
+
+---
+
+## 🚀 Features
+
+### ✍️ Air Drawing
+- Draw in the air using your **index finger**
+- Smooth real-time tracking using hand landmarks
+- Persistent drawing canvas
+- ✋ Open palm acts as an **eraser (localized, not full clear)**
+
+### 🖐️ Hand Tracking
+- Real-time **hand skeleton visualization**
+- Accurate fingertip detection using MediaPipe
+
+### 🎯 Object Detection Mode
+- Switch to detect objects using **COCO-SSD**
+- Bounding boxes + labels in real-time
+- Smooth tracking (box stabilization applied)
+- Detection overlays aligned with full screen
+
+### 🎥 Camera Controls
+- Toggle between **front and rear camera**
+- Fully responsive full-screen canvas
+
+### ⚡ Performance & UX
+- RequestAnimationFrame loop for smooth rendering
+- Smart model loading with proper dependency handling
+- Loading screen while AI initializes
+
+---
+
+## 🧠 Tech Stack
+
+- **Frontend:** React (Next.js - App Router)
+- **Hand Tracking:** MediaPipe Hands
+- **Object Detection:** TensorFlow.js + COCO-SSD
+- **Rendering:** HTML Canvas API
+- **Camera:** WebRTC (`getUserMedia`)
+
+---
+
+## ⚙️ Installation
 
 ```bash
+git clone https://github.com/your-username/air-draw-ai.git
+cd air-draw-ai
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
