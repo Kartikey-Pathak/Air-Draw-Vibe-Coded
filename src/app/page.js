@@ -99,6 +99,7 @@ export default function Home() {
       );
     }
 
+    // ✅ FIXED TEXT MIRROR BASED ON CAMERA
     async function detectObjects(video) {
       const overlay = overlayCanvasRef.current;
       const draw = drawCanvasRef.current;
@@ -142,12 +143,18 @@ export default function Home() {
         ctx.lineWidth = 3;
         ctx.strokeRect(x, y, w, h);
 
-        ctx.save();
-        ctx.scale(-1, 1);
+        // ✅ CONDITIONAL TEXT FLIP (MAIN FIX)
         ctx.fillStyle = "red";
         ctx.font = "16px Arial";
-        ctx.fillText(p.class, -(x + w), y - 5);
-        ctx.restore();
+
+        if (facingMode === "user") {
+          ctx.save();
+          ctx.scale(-1, 1);
+          ctx.fillText(p.class, -(x + w), y - 5);
+          ctx.restore();
+        } else {
+          ctx.fillText(p.class, x, y - 5);
+        }
       });
 
       prevBoxes = smoothed;
@@ -266,7 +273,6 @@ export default function Home() {
         </button>
       </div>
 
-      {/* 🎥 VIDEO */}
       <video
         ref={videoRef}
         autoPlay
@@ -278,7 +284,6 @@ export default function Home() {
         }}
       />
 
-      {/* 🎨 DRAW */}
       <canvas
         ref={drawCanvasRef}
         className="absolute w-full h-full"
@@ -287,7 +292,6 @@ export default function Home() {
         }}
       />
 
-      {/* 🖐️ OVERLAY */}
       <canvas
         ref={overlayCanvasRef}
         className="absolute w-full h-full"
